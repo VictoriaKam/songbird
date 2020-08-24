@@ -32,19 +32,30 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'center',
         flexWrap: 'wrap',
-        marginTop: theme.spacing(1),
-        marginBottom: theme.spacing(3),
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(2),
     },
     chip: {
         margin: theme.spacing(0.5),
     },
 }));
 
-function Header() {
+function Header(props) {
     const classes = useStyles();
 
+    const sections = ['Разминка', 'Воробьиные', 'Лесные птицы', 'Певчие птицы', 'Хищные птицы', 'Морские птицы'];
+    const listOfSections = sections.map((section, index) => 
+      <Chip 
+        key={index} 
+        className={classes.chip} 
+        color="secondary" 
+        label={section} 
+        clickable 
+        onClick={() => { props.updateData(index) }}
+      />);
+
     return (
-        <>
+      <>
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
@@ -56,15 +67,10 @@ function Header() {
             </AppBar>
         </div>
         <div  className={classes.chipWrapper}>
-          <Chip className={classes.chip} color="secondary" label="Разминка" clickable />
-          <Chip className={classes.chip} color="secondary" label="Воробьиные" clickable />
-          <Chip className={classes.chip} color="secondary" label="Лесные птицы" clickable />
-          <Chip className={classes.chip} color="secondary" label="Певчие птицы" clickable />
-          <Chip className={classes.chip} color="secondary" label="Хищные птицы" clickable />
-          <Chip className={classes.chip} color="secondary" label="Морские птицы" clickable />
+        {listOfSections}
         </div>
       </>
-      );
+    );
 }
 
 export default Header;

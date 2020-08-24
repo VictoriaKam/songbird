@@ -1,18 +1,33 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import question from './question_mark.jpg';
+import question from './6.png';
 import Typography from '@material-ui/core/Typography';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import AudioPlayer from 'material-ui-audio-player';
 
+const muiTheme = createMuiTheme({
+    overrides: {
+        MuiPaper: {
+            root: {
+                backgroundColor: '#f8fee7'
+            },
+        },
+    }
+});
+
 const useStyles = makeStyles((theme) => ({
+    root: {
+        backgroundColor: '#f8fee7',
+        boxShadow: 'none'
+    },
+
     wrapper: {
         display: 'grid',
         gridTemplateColumns: '1fr 4fr',
-        border: '2px solid #FFDE03',
-        borderRadius: '16px',
-        padding: '3% 3%',
-        margin: '0 5% 2% 5%',
+        padding: '3%',
+        margin: '0 10% 23px 10%',
+        backgroundColor: '#f8fee7',
+        borderRadius: '10px'
     },
 
     image: {
@@ -23,24 +38,24 @@ const useStyles = makeStyles((theme) => ({
 
     name: {
         marginBottom: theme.spacing(3),
-        textAlign: 'center',
     }
 }));
 
-const muiTheme = createMuiTheme({});
-
-function Question() {
+function Question(props) {
     const classes = useStyles();
+
+    const bird = props.birds[props.section][Math.floor(Math.random() * props.birds.length)];
 
     return (
         <div className={classes.wrapper}>
             <img src={question} alt="Question Mark" className={classes.image} />
             <div>
                 <Typography variant="h5" className={classes.name}>
-                    ???
+                    «...»
                 </Typography>
                 <ThemeProvider theme={muiTheme}>
-                    <AudioPlayer src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" 
+                    <AudioPlayer src={bird.audio}
+                        useStyles={useStyles}
                         width="100%" />
                 </ThemeProvider>
             </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -8,59 +9,47 @@ import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 
 const useStyles = makeStyles(() => ({
     root: {
-      display: 'inline-block',
-      width: '40%',
-      border: '2px solid #439A86',
-      borderRadius: '16px',
-      marginLeft: '5%',
-      marginRight: '4.5%',
+      display: 'flex',
+      alignItems: 'center',
+      width: '39%',
+      minHeight: '46vh',
+      float: 'left',
+      backgroundColor: '#f8fee7',
+      borderRadius: '10px',
+      marginLeft: '10%',
+      marginRight: '23px',
+      marginBottom: '23px'
     },
+
+    list: {
+        width: '100%'
+    }
   }));
 
-function Variants() {
+function Variants(props) {
     const classes = useStyles();
+    
+    const variants = props.birds[props.section];
+
+    const listOfVariants = variants.map((variant, index) =>
+            <ListItem 
+                button
+                key={index}
+                onClick={() => { props.updateBird(index) }}
+            >
+                <ListItemIcon>
+                    <RadioButtonUncheckedIcon color='primary' />
+                </ListItemIcon>
+                <ListItemText primary={variant.name} />
+            </ListItem>
+        );
 
     return (
-        <div className={classes.root}>
-            <List component="nav" aria-label="variants to answer">
-                <ListItem button>
-                    <ListItemIcon>
-                        <RadioButtonUncheckedIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Орел" />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <RadioButtonUncheckedIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Коршун" />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <RadioButtonUncheckedIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Лунь" />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <RadioButtonUncheckedIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Сокол" />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <RadioButtonUncheckedIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Ястреб" />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <RadioButtonUncheckedIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Филин" />
-                </ListItem>
+        <Box className={classes.root}>
+            <List component="nav" aria-label="variants to answer" className={classes.list}>
+               {listOfVariants}
             </List>
-    </div>
+        </Box>
     );
 }
         
