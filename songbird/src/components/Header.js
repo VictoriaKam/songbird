@@ -42,16 +42,14 @@ const useStyles = makeStyles((theme) => ({
 
 function Header(props) {
     const classes = useStyles();
-
+    const { level, score } = props;
     const sections = ['Разминка', 'Воробьиные', 'Лесные птицы', 'Певчие птицы', 'Хищные птицы', 'Морские птицы'];
     const listOfSections = sections.map((section, index) => 
       <Chip 
-        key={index} 
-        className={classes.chip} 
-        color="secondary" 
-        label={section} 
-        clickable 
-        onClick={() => { props.updateData(index) }}
+        key={section} 
+        className={classes.chip}
+        color={ level === index ? "secondary" : "primary" }
+        label={section}
       />);
 
     return (
@@ -62,7 +60,7 @@ function Header(props) {
                     <Typography variant="h4" className={classes.title}>
                     Songbird
                     </Typography>
-                    <Typography variant="h6">Score: 11</Typography>
+                    <Typography variant="h6">Score: {score}</Typography>
                 </Toolbar>
             </AppBar>
         </div>
