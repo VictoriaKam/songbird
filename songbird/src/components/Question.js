@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import question from './6.png';
+import question from '../assets/question-mark.png';
 import Typography from '@material-ui/core/Typography';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import AudioPlayer from 'material-ui-audio-player';
@@ -22,39 +22,51 @@ const useStyles = makeStyles((theme) => ({
     },
 
     wrapper: {
+        boxSizing: 'border-box',
         display: 'grid',
-        gridTemplateColumns: '1fr 4fr',
-        padding: '3%',
-        margin: '0 10% 23px 10%',
+        gridTemplateColumns: '200px 4fr',
+        gridColumnGap: '15px',
+        padding: '30px',
+        margin: '0 10% 20px',
         backgroundColor: '#f8fee7',
-        borderRadius: '10px'
+        borderRadius: '10px',
+        [theme.breakpoints.down('sm')]: {
+            gridTemplateColumns: '1fr',
+          },
+        [theme.breakpoints.down('xs')]: {
+          margin: '0 3% 20px',
+        },
+    },
+
+    textWrapper: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'start',
     },
 
     image: {
-      maxWidth: '120px',
-      maxHeight: '120px',
-      justifySelf: 'center',
+      maxWidth: '100%',
+      maxHeight: '130px',
+      borderRadius: '10px',
     },
-
-    name: {
-        marginBottom: theme.spacing(3),
-    }
 }));
+
+
 
 function Question(props) {
     const classes = useStyles();
-
-    const bird = props.birds[props.section][Math.floor(Math.random() * props.birds.length)];
+    const { bird, victory } = props;
 
     return (
         <div className={classes.wrapper}>
-            <img src={question} alt="Question Mark" className={classes.image} />
-            <div>
+            <img src={ victory ? bird.image : question } alt="Bird" className={classes.image} />
+            <div className={classes.textWrapper}>
                 <Typography variant="h5" className={classes.name}>
-                    «...»
+                    {victory ? `${bird.name}` : '«...»'}
                 </Typography>
                 <ThemeProvider theme={muiTheme}>
-                    <AudioPlayer src={bird.audio}
+                    <AudioPlayer src={ victory ? '' : bird.audio }
                         useStyles={useStyles}
                         width="100%" />
                 </ThemeProvider>

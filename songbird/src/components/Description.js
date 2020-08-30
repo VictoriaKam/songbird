@@ -21,22 +21,32 @@ const useStyles = makeStyles((theme) => ({
     },
 
     rootWrapper: {
+      boxSizing: 'border-box',
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'center',
-      width: '39.5%',
-      minHeight: '46vh',
+      width: '40%',
+      minHeight: '330px',
       marginRight: '10%',
+      padding: '30px',
       backgroundColor: '#f8fee7',
       borderRadius: '10px',
-      marginBottom: '23px'
+      marginBottom: '20px',
+      [theme.breakpoints.down('sm')]: {
+        width: '80%',
+        margin: '0 10% 23px 10%',
+        float: 'none',
+      },
+      [theme.breakpoints.down('xs')]: {
+        width: '94%',
+        margin: '0 3% 23px 3%',
+      }
     },
 
     wrapper: {
         display: 'grid',
         gridTemplateColumns: '1fr 1.5fr',
         gridColumnGap: '15px',
-        padding: '2% 3%',
+        marginBottom: theme.spacing(2),
     },
 
     image: {
@@ -47,18 +57,21 @@ const useStyles = makeStyles((theme) => ({
   
     name: {
         marginBottom: theme.spacing(2),
-        textAlign: 'center',
+        textAlign: 'left',
     },
 
-    descriptionWrapper: {
-        padding: '0 3%',
+    description: {
+        margin: '0',
+        lineHeight: '1.75',
+        textAlign: 'justify'
     }
 }));
 
 function Description(props) {
     const classes = useStyles();
+    const { birdToDescribe } = props;
     
-    if (props.describe === null) {
+    if (birdToDescribe === null) {
         return (
             <div className={classes.rootWrapper}>
                 <p className={classes.name}>
@@ -66,29 +79,29 @@ function Description(props) {
                 </p>
             </div>
         );
+
     } else {
-        const birdDescribe = props.birds[props.section][props.describe];
         return (
             <div className={classes.rootWrapper}>
                 <div className={classes.wrapper}>
                     <div>
-                        <img src={birdDescribe.image} alt="Bird" className={classes.image} />
+                        <img src={birdToDescribe.image} alt="Bird" className={classes.image} />
                     </div>
                     <div>
                         <Typography variant="h5" className={classes.name}>
-                            {birdDescribe.name}
+                            {birdToDescribe.name}
                         </Typography>
                         <Typography variant="h6" className={classes.name}>
-                            {birdDescribe.species}
+                            {birdToDescribe.species}
                         </Typography>
                         <ThemeProvider theme={muiTheme}>
-                            <AudioPlayer src={birdDescribe.audio} width="100%" useStyles={useStyles} />
+                            <AudioPlayer src={birdToDescribe.audio} width="100%" useStyles={useStyles} />
                         </ThemeProvider>
                     </div>
                 </div>
                 <div className={classes.descriptionWrapper}>
-                    <p>
-                        {birdDescribe.description}
+                    <p className={classes.description}>
+                        {birdToDescribe.description}
                     </p>
                 </div>
             </div>
